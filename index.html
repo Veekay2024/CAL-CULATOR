@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cal-Culator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2"></script>
+</head>
+<body>
+    <div class="calc" role="application" aria-label="Calculator">
+        <!-- Header -->
+         <div class="calc-header">
+            <span class="calc-label">Calcul</span>
+            <div class="calc-mode">
+              <div class="mode-dot active" id="dot1"></div>
+              <div class="mode-dot" id="dot2"></div>
+              <div class="mode-dot" id="dot3"></div>
+            </div>
+         </div>
+         <!-- Header End -->
+
+            <!-- Display -->
+         <div class="display" aria-live="polite" aria-atomic="true">
+            <div class="display-expr" id="expr"></div>
+            <div class="display-main" id="main">0</div>
+         </div>     
+            <!-- Display End -->
+
+           <!--KEYPAD  -->
+         <div class="keypad" id="keypad">
+            <!-- ROW 1 -->
+            <button class="btn btn-clear" data-action="clear" aria-label="Clear all">AC</button>
+            <button class="btn btn-mod" data-action="sign" aria-label="Toggle sign">+/-</button>
+            <button class="btn btn-mod" data-action="percent" aria-label="Percent">%</button>
+            <button class="btn btn-op" data-action="op" aria-label="Divide">÷</button>
+
+            <!-- ROW 2 -->
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="7">7</button>
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="8">8</button>
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="9">9</button>
+             <button type="button" class="btn btn-op" data-action="op" data-op="×" aria-label="Multiply">×</button>
+
+            <!-- ROW 3 -->
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="4">4</button>
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="5">5</button>
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="6">6</button>
+             <button type="button" class="btn btn-op" data-action="op" data-op="-" aria-label="Subtract">-</button>
+
+            <!-- ROW 4 -->
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="1">1</button>
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="2">2</button>
+             <button type="button" class="btn btn-digit" data-action="digit" data-value="3">3</button>
+             <button type="button" class="btn btn-op" data-action="op" data-op="+" aria-label="Add">+</button>
+
+            <!-- ROW 5 -->
+             <button type="button" class="btn btn-digit btn-zero" data-action="digit" data-value="0">0</button>
+             <button type="button" class="btn btn-digit" data-action="decimal" aria-label="Decimal point">.</button>
+             <button type="button" class="btn btn-eq" data-action="equals" aria-label="Equals">=</button>
+         </div>
+            <!-- KEYPAD END -->
+             <div class="hint">Keyboard supported ↑</div>
+    </div>
+        
+    
+</body>
+</html>

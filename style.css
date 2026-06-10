@@ -1,0 +1,387 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+  --bg1: #1a0f00;
+  --bg2: #2d1a00;
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-hover: rgba(255,255,255,0.11);
+  --amber: #f59e0b;
+  --amber-dim: #b45309;
+  --amber-glow: rgba(245,158,11,0.25);
+  --red: #ef4444;
+  --red-glow: rgba(239,68,68,0.22);
+  --display-text: #fef3c7;
+  --muted: rgba(254,243,199,0.38);
+  --white: #fef3c7;
+  --r: 14px;
+  --r-sm: 10px;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* BACKGROND ORBS */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+body::before {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(245,158,11,0.18) 0%, transparent 70%);
+    top: -80px;
+    left: -80px;
+}
+
+body::after {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(180,83,9,0.14) 0%, transparent 70%);
+    bottom: -60px;
+    left: -60px;
+}
+/* BACKGROUND-ORBS-END */
+
+/* CALC SHELL */
+.calc {
+    position: relative;
+    z-index: 1;
+    width: 340px;
+    background: rgba(26,15,0,0.72);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.55),
+                0 0 0 0.5px rgba(255,255,255,0.06) inset,
+                0 1px 0 rgba(255,255,255,0.1) inset;
+    padding: 24px 22px 22px;
+    animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;            
+}
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(.88) translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+/* CALC SHELL END */
+
+/* HEADER */
+.calc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 0 2px;
+}
+
+.calc-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+.calc-mode {
+    display: flex;
+    gap: 5px;
+}
+
+.mode-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--glass-border);
+    transition: background .2s;
+}
+
+.mode-dot.active {
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber);
+}
+/* HEADER END */
+
+/* DISPLAY */
+.display {
+    background: rgba(0,0,0,0.38);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--r);
+    padding: 16px 18px 14px;
+    margin-bottom: 18px;
+    min-height: 102px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+}
+
+.display::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(245,158,11,0.03), transparent 40%);
+    pointer-events: none;
+}
+
+.display-expr {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--muted);
+    min-height: 20px;
+    letter-spacing: .04em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    transition: opacity .15s;
+}
+
+.display-main {
+    font-family: 'DM Mono', monospace;
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--display-text);
+    text-align: right;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: transform .1s cubic-bezier(.4,0,.2,1), color .2s;
+}
+
+.display-main.pop {
+    animation: numPop .12s ease;
+}
+@keyframes numPop {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.04);}
+    100% {transform: scale(1);}
+}
+
+.display-main.error {
+    color: var(--red);
+    font-size: 26px;
+}
+
+.display-main.result {
+    color: var(--amber);
+}
+/* DISPLAY END */
+
+/* KEYPAD */
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+}
+/* KEYPAD END */
+
+/* BUTTON */
+.btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    height: 62px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--r-sm);
+    background: var(--glass);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: background .15s, transform .1s, box-shadow .15s, border-color .15s;
+    -webkit-user-select: none; /* Safari 3+, iOS 3+ */
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+/* BUTTON END */
+
+/* RIPPLE LAYER */
+.btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--rx, 50%)var(--ry, 50%), rgba(255,255,255,0.14) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity .25s;
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+.btn:hover {
+    background: var(--glass-hover);
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+}
+
+.btn:active, .btn.pressed {
+    transform: scale(0.93) translateY(0);
+    background: rgba(255,255,255,0.14);
+}
+/* RIPPLE LAYER END */
+
+/* Digit Buttons */
+.btn.digit {
+    font-size: 19px;
+}
+/* Digit Buttons END */
+
+/* Operator Buttons */
+.btn-op {
+    color: var(--amber);
+    border-color: rgba(245,158,11,0.22);
+    font-size: 20px;
+}
+
+.btn-op:hover {
+    background: rgba(245,158,11,0.1);
+    border-color: rgba(245,158,11,0.4);
+    box-shadow: 0 0 18px rgba(245,158, 11,0.12);
+}
+
+.btn-op:active, .btn-op.pressed {
+    background: rgba(245,158,11,0.18);
+}
+/* Operator Buttons END */
+
+/* Clear Button */
+.btn-clear {
+    color: var(--red);
+    border-color: rgba(239,68,68,0.2);
+}
+
+.btn-clear:hover {
+    background: rgba(239,68,68,0.1);
+    border-color: rgba(239,68,68,0.35);
+    box-shadow: 0 0 18px var(--red-glow);
+}
+
+.btn-clear:active, .btn-clear.pressed {
+    background: rgba(239,68,68,0.18);
+}
+/* Clear Button END */
+
+/* Delete Button */
+.btn-del {
+    color: var(--red);
+    border-color: rgba(239,68,68,0.15);
+    font-size: 16px;
+}
+
+.btn-del:hover {
+    background: rgba(239,68,68,0.08);
+    border-color: rgba(239,68,68,0.3);
+}
+/* Delete Button END */
+
+/* Equals Button */
+.btn-eq {
+    background: var(--amber);
+    color: #1a0f00;
+    border: none;
+    font-size: 22px;
+    font-weight: 700;
+    box-shadow: 0 4px 20px var(--amber-glow), 0 1px 0 rgba(255,255,255,0.2) inset;
+    transition: background .15s, transform .1s, box-shadow .15s;
+}
+
+.btn-eq:hover {
+    background: #fbbf24;
+    box-shadow: 0 6px 28px rgba(245,158,11,0.45);
+    transform: translateY(-2px);
+}
+
+.btn-eq:active, .btn-eq.pressed {
+    transform: scale(0.93) translateY(0);
+    box-shadow: 0 2px 10px var (--amber-glow);
+    background: var(--amber-dim);
+}
+
+.btn-eq::before {
+    display: none;
+}
+/* Equals Button END */
+
+/* Double-wide zero button */
+.btn-zero {
+    grid-column: span 2;
+    justify-content: flex-start;
+    padding-left: 22px;
+}
+/* Double-wide zero button END */
+
+/* Modifier buttons (%, +/-) */
+.btn-mod {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+.btn-mod:hover {
+    color: var(--white);
+}
+/* Modifier buttons END */
+
+/* KEYBOARD HINT */
+.hint {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: rgba(254,243,199,0.18);
+    text-transform: uppercase;
+}
+/* KEYBOARD HINT END */
+
+/* RESPONSIVE */
+@media (max-width: 380px) {
+    .calc {
+        width: 310px;
+        padding: 20px 16px 18px;
+    }
+    .btn {
+        height: 54px;
+        font-size: 16px;
+    }
+    .display-main {
+        font-size: 36px;
+    }
+    .keypad {
+        gap: 7px;
+    }
+}
