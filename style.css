@@ -32,8 +32,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100dvh;
   min-height: 100vh;
-  overflow: hidden;
+  padding: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -67,7 +70,8 @@ body::after {
 .calc {
     position: relative;
     z-index: 1;
-    width: 340px;
+    width: min(100vw - 18px, 380px);
+    max-width: 100%;
     background: rgba(26,15,0,0.72);
     border: 1px solid var(--glass-border);
     border-radius: 28px;
@@ -76,7 +80,7 @@ body::after {
     box-shadow: 0 32px 80px rgba(0,0,0,0.55),
                 0 0 0 0.5px rgba(255,255,255,0.06) inset,
                 0 1px 0 rgba(255,255,255,0.1) inset;
-    padding: 24px 22px 22px;
+    padding: 18px 14px 16px;
     animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both;            
 }
 @keyframes popIn {
@@ -134,7 +138,7 @@ body::after {
     border-radius: var(--r);
     padding: 16px 18px 14px;
     margin-bottom: 18px;
-    min-height: 102px;
+    min-height: 96px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -208,9 +212,9 @@ body::after {
 /* BUTTON */
 .btn {
     font-family: 'Syne', sans-serif;
-    font-size: 17px;
+    font-size: clamp(15px, 4vw, 17px);
     font-weight: 500;
-    height: 62px;
+    height: clamp(54px, 11vw, 62px);
     border: 1px solid var(--glass-border);
     border-radius: var(--r-sm);
     background: var(--glass);
@@ -369,14 +373,31 @@ body::after {
 /* KEYBOARD HINT END */
 
 /* RESPONSIVE */
-@media (max-width: 380px) {
-    .calc {
-        width: 310px;
-        padding: 20px 16px 18px;
+@media (max-width: 420px) {
+    body {
+        padding: 8px;
+        align-items: stretch;
     }
+
+    .calc {
+        width: calc(100vw - 16px);
+        max-width: 100%;
+        padding: 14px 12px 14px;
+        border-radius: 22px;
+    }
+
+    .display {
+        min-height: 86px;
+        padding: 12px 14px 10px;
+    }
+
     .btn {
         height: 54px;
-        font-size: 16px;
+        font-size: 15px;
+    }
+
+    .btn-zero {
+        padding-left: 16px;
     }
     .display-main {
         font-size: 36px;
